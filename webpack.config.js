@@ -11,13 +11,13 @@ var development = process.env.NODE_ENV || 'development'
 module.exports = {
   debug: development ? true : false,
   devtool: development ? '#eval-source-map' : null,
-  context: path.join(__dirname, 'scripts'),
+  context: path.join(__dirname, 'demo'),
   entry: {
     index: development ? ['webpack-hot-middleware/client?reload=true', './'] : ['./']
   },
   output: {
     filename: '[name].js',
-    path: path.join(__dirname, 'demo')
+    path: path.join(__dirname, 'public')
   },
   resolve: {
     extensions: ['', '.js','.jsx'],

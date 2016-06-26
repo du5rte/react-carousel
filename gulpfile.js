@@ -15,14 +15,14 @@ var webpackConfig        = require('./webpack.config.js')
 var webpackDevMiddleware = require('webpack-dev-middleware')
 var webpackHotMiddleware = require('webpack-hot-middleware')
 
-// Clean
-gulp.task('clean', function(done) {
-  del(['demo/*'], done())
-  done()
-})
-
 // Webpack Compilers
 var frontCompiler = webpack(require('./webpack.config.js'))
+
+// Clean
+gulp.task('clean', function(done) {
+  del(['public/*'], done())
+  done()
+})
 
 // Webpcak Logger
 function webpackLogger(done) {
@@ -38,28 +38,20 @@ function webpackLogger(done) {
 
 // Styles
 gulp.task('styles', function() {
-  return gulp.src('styles/**/*.{sass,scss,css}')
-      // add styles compiler (e.g. gulp-sass)
-    .pipe(gulp.dest('demo'))
+  return gulp.src('demo/**/*.css')
+    .pipe(gulp.dest('public'))
     .pipe(browserSync.stream({match: '**/*.css'}))
 })
 
 // Views
 gulp.task('views', function() {
-  return gulp.src('views/**/*.html')
-    // add views compiler (e.g. gulp-jade)
-    // .pipe($.mustache())
-    .pipe(gulp.dest('demo'))
+  return gulp.src('demo/**/*.html')
+    .pipe(gulp.dest('public'))
 })
 
 // Webpack Bundler
 gulp.task('bundle', function(done) {
   frontCompiler.run(webpackLogger(done))
-})
-
-// Application
-gulp.task('application', function(done) {
-  backCompiler.run(webpackLogger(done))
 })
 
 // Watcher
@@ -69,7 +61,7 @@ gulp.task('watch', function () {
   browserSync.init({
     browser: 'google chrome canary',
     server: {
-      baseDir: 'demo',
+      baseDir: 'public',
       middleware: [
         webpackDevMiddleware(frontCompiler, {
           noInfo: true,
@@ -80,8 +72,8 @@ gulp.task('watch', function () {
     }
   })
 
-  gulp.watch('views/**/*.{html,jade}', gulp.series('views', browserSync.reload))
-  gulp.watch('styles/**/*.{sass,scss,css}', gulp.series('styles'))
+  gulp.watch('demo/**/*.html', gulp.series('views', browserSync.reload))
+  gulp.watch('demo/**/*.css', gulp.series('styles'))
 
 })
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import View from 'react-flexbox'
 
-import Carousel from './Carousel'
+import Carousel from '../src/Carousel'
 
 export default class Demo extends Component {
   render() {

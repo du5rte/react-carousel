@@ -25,5 +25,5 @@ typings/
 # Development
 # Production
 build/
-demo/
+public/
 www/
