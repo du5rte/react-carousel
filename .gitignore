@@ -1,0 +1,29 @@
+# rename _gitignore to .gitignore
+
+# OS generated file
+.DS_Store
+.DS_Store?
+._*
+.Sportlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+.env
+.imdone/
+npm-debug.log
+.sass-cache
+.imdoneignore
+temp/
+
+# Packages
+node_modules/
+bower_components/
+typings/
+
+# Development
+# Production
+build/
+demo/
+www/
