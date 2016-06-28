@@ -7,7 +7,7 @@ export default class Demo extends Component {
   render() {
     let styleContrainer = {
       height: '400px',
-      width: '600px'
+      width: '600px',
       // height: '100%',
       // width: '100%',
     }
@@ -38,7 +38,7 @@ export default class Demo extends Component {
 
     return (
       <div style={styleContrainer}>
-        <Carousel >
+        <Carousel>
           <div style={style}>0😭</div>
           <div style={style}>1😩</div>
           <div style={styleANother}>2😟</div>
