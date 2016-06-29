@@ -5,60 +5,63 @@ import View from 'react-flexbox'
 
 import CarouselLogic from './CarouselLogic'
 
-
-/*
-TODO: moveTo function for Counter
-TODO: transform prefixer
-const TRANSFORM = require('get-prefix')('transform')
-
-TODO: auto height
-// componentDidMount() {
-//   console.log(ReactDOM.findDOMNode(this))
-// }
-
-TODO: on rest
-onRest={this.handleRest.bind(this)}
-
-handleRest() {
-  this.setState({moving: false})
-}
-*/
-
 export default class Carousel extends CarouselLogic {
-  constructor(props) {
-    super(props)
-    this.state = {
-      currentIndex: props.currentIndex,
-      maxIndex: props.children.length - 1,
-      moving: false,
-    }
+  get previousButton() {
+    return (
+      <div style={this.styles.previousButton} onClick={this.previous.bind(this)}>
+        {
+          <this.props.PreviousButton
+            state={this.state}
+            previous={this.previous.bind(this)}
+          />
+        }
+      </div>
+    )
   }
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown.bind(this));
+  get nextButton() {
+    return (
+      <div style={this.styles.nextButton} onClick={this.next.bind(this)}>
+        {
+          <this.props.NextButton
+            state={this.state}
+            next={this.next.bind(this)}
+          />
+        }
+      </div>
+    )
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown.bind(this));
+  get buttons() {
+    return (
+      <div style={this.styles.buttons}>
+        {this.props.showPreviousButton ? this.previousButton : null}
+        {this.props.showNextButton ? this.nextButton : null}
+      </div>
+    )
   }
 
-  previous() {
-    this.setState({moving: 'backwards'})
-    this.setState({currentIndex: this.previousIndex})
+  get tracker() {
+    return (
+      <div style={this.styles.tracker} >
+        {
+          <this.props.Tracker
+            children={this.props.children}
+            state={this.state}
+            select={this.select.bind(this)}
+          />
+        }
+      </div>
+    )
   }
 
-  next() {
-    this.setState({moving: 'forwards'})
-    this.setState({currentIndex: this.nextIndex})
-  }
-
-  handleKeyDown(e) {
-    if (e.key === 'ArrowLeft') {
-      this.previous()
-    }
-    if (e.key === 'ArrowRight') {
-      this.next()
-    }
+  get ui() {
+    return (
+      <View row style={this.styles.ui}>
+        {this.props.showButtons ? this.buttons : null}
+        {this.props.showTracker ? this.tracker : null}
+      </View>
+    )
   }
 
   render() {
@@ -66,10 +69,12 @@ export default class Carousel extends CarouselLogic {
       <View column style={this.styles.wrapper} >
         <View style={this.styles.slider}>
         {
-          this.props.children.map((child, index, map) =>
+          this.props.children.map((child, index) =>
             <Motion
               key={index}
-              style={{ x: this.relativeSpring(index) }}
+              style={{
+                x: this.spring(index)
+              }}
             >
             {({ x }) =>
               <View
@@ -87,13 +92,7 @@ export default class Carousel extends CarouselLogic {
           )
         }
         </View>
-        <View row style={this.styles.ui}>
-          <div style={this.styles.buttons}>
-            <div style={this.styles.previousButton} onClick={this.previous.bind(this)}>{<this.props.PreviousButton />}</div>
-            <div style={this.styles.nextButton} onClick={this.next.bind(this)}>{<this.props.NextButton />}</div>
-          </div>
-          <div style={this.styles.counter} >{<this.props.Counter state={this.state} />}</div>
-        </View>
+        {this.props.showUI ? this.ui : null}
       </View>
     )
   }

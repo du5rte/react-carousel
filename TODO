@@ -1,0 +1,25 @@
+# TODO
+
+
+[transform prefixer](#TODO:)
+```js
+const TRANSFORM = require('get-prefix')('transform')
+```
+
+[auto height](TODO:)
+```js
+componentDidMount() {
+  ReactDOM.findDOMNode(this)
+}
+```
+
+[Handle on rest](TODO:)
+```js
+onRest={this.handleRest.bind(this)}
+
+handleRest() {
+  this.setState({moving: false})
+}
+```
+
+[fade](TODO:)
